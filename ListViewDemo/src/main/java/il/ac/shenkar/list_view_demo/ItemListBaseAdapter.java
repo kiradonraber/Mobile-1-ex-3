@@ -9,8 +9,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.support.v7.app.ActionBarActivity;
 
 /**
  * Created by tomerweller on 10/21/13.
@@ -46,6 +49,16 @@ public class ItemListBaseAdapter extends BaseAdapter {
         return position;
     }
 
+    private final View.OnClickListener doneButtonOnClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            int position = (Integer) v.getTag();
+            ItemDetails NoteDetails = new ItemDetails();
+            NoteDetails = note_Singleton.getInstance(v.getContext()).findTaskByPosition(position);
+            note_Singleton.getInstance(v.getContext()).Delete_Note(NoteDetails);
+            notifyDataSetChanged();
+        }
+    };
 
     public View getView(int position, View convertView, ViewGroup parent) {
         ViewHolder holder;
@@ -54,8 +67,8 @@ public class ItemListBaseAdapter extends BaseAdapter {
             holder = new ViewHolder();
             holder.tvName = (TextView) convertView.findViewById(R.id.name);
             holder.tvDescription = (TextView) convertView.findViewById(R.id.itemDescription);
-            holder.tcPrice = (TextView) convertView.findViewById(R.id.price);
-            holder.imageView = (ImageView) convertView.findViewById(R.id.photo);
+            holder.dButton = (Button) convertView.findViewById(R.id.doneButton);
+            holder.dButton.setOnClickListener(doneButtonOnClickListener);
             convertView.setTag(holder);
         } else {
             holder = (ViewHolder) convertView.getTag();
@@ -63,16 +76,20 @@ public class ItemListBaseAdapter extends BaseAdapter {
 
         holder.tvName.setText(itemDetailsrrayList.get(position).getName());
         holder.tvDescription.setText(itemDetailsrrayList.get(position).getItemDescription());
-        holder.tcPrice.setText(itemDetailsrrayList.get(position).getPrice());
-        holder.imageView.setImageResource(imgid[itemDetailsrrayList.get(position).getImageNumber() - 1]);
 
+        Button doneBtn = (Button)convertView.findViewById(R.id.doneButton);
+        doneBtn.setOnClickListener(new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+
+        }
+    });
         return convertView;
     }
 
     private static class ViewHolder {
         TextView tvName;
         TextView tvDescription;
-        TextView tcPrice;
-        ImageView imageView;
+        Button dButton;
     }
 }

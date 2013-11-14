@@ -1,3 +1,7 @@
 <resources>
-    <string name="app_name">ListViewDemo</string>
+    <string name="app_name">Notes</string>
+    <string name="button_done">Done</string>
+    <string name="Add">Add</string>
+    <string name="title_message">Enter Note Title</string>
+    <string name="description_message">Enter Note Description</string>
 </resources>
